@@ -31,6 +31,7 @@ import routes from '../shared/routes'
 import { fetchComponentData } from './util/fetchData'
 import posts from './routes/post.routes'
 import user from './routes/user.routes'
+import auth from './routes/auth.routes'
 import dummyData from './dummyData'
 import serverConfig from './config'
 
@@ -51,6 +52,7 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }))
 app.use(Express.static(path.resolve(__dirname, '../static')))
 app.use('/api', posts)
 app.use('/user', user)
+app.use('/auth', auth)
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
