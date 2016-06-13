@@ -39,6 +39,7 @@ class PostContainer extends Component {
   render() {
     return (
       <div>
+        <Header />
         <div className="container">
           <PostCreateView addPost={this.add}
             showAddPost={this.state.showAddPost}/>

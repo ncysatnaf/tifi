@@ -3,7 +3,9 @@ const Schema = mongoose.Schema
 import bcrypt from 'bcrypt-nodejs'
 
 const userSchema = new Schema({
+  userId: {type: String, required: true},
   email: {type: String, required: true },
+  token: {type: String, required: true},
   password: {type: String, required: true},
   created_at: { type: Date, default: Date.now, required: true },
   name: {type: String,},
@@ -12,6 +14,7 @@ const userSchema = new Schema({
   google: {id: String, token: String, email: String, name: String },
   github: {id: String, token: String, name: String }
 })
+
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
 }

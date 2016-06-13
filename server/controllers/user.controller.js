@@ -1,4 +1,5 @@
 import User from '../models/user'
+import jwt from 'jsonwebtoken'
 
 export function getUser(req, res) {
   const name = req.query.name
@@ -28,18 +29,23 @@ export function addUser(req, res) {
     if(err){
       return res.status(500).send(err)
     }
-    console.log(user)
     if(user){
       return res.status(403).send("该用户已存在")
     } else if(!user){
-      const newUser = new User(req.body.user)
-      newUser.password = newUser.generateHash(newUser.password)
-      // Let's sanitize inputs
-      newUser.save((err, saved) => {
-        if (err) {
+      User.count({},function(err,count){
+        if(err) {
           return res.status(500).send(err)
         }
-        return res.json({ user: saved })
+        const newUser = new User(req.body.user)
+        newUser.password = newUser.generateHash(newUser.password)
+        newUser.userId = count + 1
+        newUser.token = jwt.sign({userId:newUser.userId, iat: Math.floor(Date.now() / 1000) - 30},'haha')
+        newUser.save((err, saved) => {
+          if (err) {
+            return res.status(500).send(err)
+          }
+          return res.json({ user: saved })
+        })
       })
     }
   })
