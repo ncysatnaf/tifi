@@ -5,7 +5,7 @@ import Header from '../../components/Header/Header'
 import { connect } from 'react-redux'
 import * as Actions from '../../redux/actions/actions'
 
-class PostContainer extends Component {
+class ChatContainer extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
@@ -49,24 +49,19 @@ class PostContainer extends Component {
   }
 }
 
-PostContainer.need = [() => { return Actions.fetchPosts() }]
-PostContainer.contextTypes = {
+ChatContainer.need = [() => { return Actions.fetchChats() }]
+ChatContainer.contextTypes = {
   router: React.PropTypes.object,
 }
 
 function mapStateToProps(store) {
   return {
-    posts: store.posts,
+    chats: store.chats,
   }
 }
 
-PostContainer.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-  })).isRequired,
+ChatContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
 }
 
-export default connect(mapStateToProps)(PostContainer)
+export default connect(mapStateToProps)(ChatContainer)

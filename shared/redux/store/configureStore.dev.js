@@ -1,35 +1,36 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import DevTools from '../../container/DevTools/DevTools';
-import rootReducer from '../reducers/reducer';
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
+import DevTools from '../../container/DevTools/DevTools'
+import rootReducer from '../reducers'
+import createLogger from 'redux-logger'
 
 export function configureStore(initialState = {}) {
-  let enhancerClient;
+  let enhancerClient
   if (process.env.CLIENT) {
     enhancerClient = compose(
-      applyMiddleware(thunk),
+      applyMiddleware(thunk, createLogger()),
       window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument()
-    );
+    )
   }
 
 
-  const enhancerServer = applyMiddleware(thunk);
+  const enhancerServer = applyMiddleware(thunk)
 
-  let store;
+  let store
 
   if (process.env.CLIENT) {
-    store = createStore(rootReducer, initialState, enhancerClient);
+    store = createStore(rootReducer, initialState, enhancerClient)
   } else {
-    store = createStore(rootReducer, initialState, enhancerServer);
+    store = createStore(rootReducer, initialState, enhancerServer)
   }
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../reducers/reducer', () => {
-      const nextReducer = require('../reducers/reducer').default;
-      store.replaceReducer(nextReducer);
-    });
+    module.hot.accept('../reducers/index', () => {
+      const nextReducer = require('../reducers/index').default
+      store.replaceReducer(nextReducer)
+    })
   }
 
-  return store;
+  return store
 }

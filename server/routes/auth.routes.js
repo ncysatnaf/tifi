@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import * as AuthController from '../controllers/auth.controller'
-const server = new Router()
+const router = new Router()
 
-server.route('/login').post(AuthController.login)
+router.route('/login').post(AuthController.login)
 
-export default server
+export default router
