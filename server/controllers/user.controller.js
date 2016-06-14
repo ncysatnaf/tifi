@@ -13,7 +13,6 @@ export const getUser = async (req, res) => {
   }
 }
 
-
 export const getUsers = async (req, res) => {
   try {
     let users = await User.find().sort('-dateAdded')
@@ -48,30 +47,4 @@ export const addUser = async (req, res) => {
   } catch (e) {
     return res.status(500).send(e)
   }
-
-  //ES5 Code
-  // User.findOne({email: req.body.user.email}, (err,user) => {
-  //   if(err){
-  //     return res.status(500).send(err)
-  //   }
-  //   if(user){
-  //     return res.status(403).send("该用户已存在")
-  //   } else if(!user){
-  //     User.count({},function(err,count){
-  //       if(err) {
-  //         return res.status(500).send(err)
-  //       }
-  //       const newUser = new User(req.body.user)
-  //       newUser.password = newUser.generateHash(newUser.password)
-  //       newUser.userId = count + 1
-  //       newUser.token = jwt.sign({userId:newUser.userId, iat: Math.floor(Date.now() / 1000) - 30},'haha')
-  //       newUser.save((err, saved) => {
-  //         if (err) {
-  //           return res.status(500).send(err)
-  //         }
-  //         return res.json({ user: saved })
-  //       })
-  //     })
-  //   }
-  // })
 }
