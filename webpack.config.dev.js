@@ -28,7 +28,8 @@ module.exports = {
         exclude: [/node_modules/, /.+\.config.js/],
         loader: 'babel',
         query: {
-          presets: ['react-hmre'],
+          plugins: ['transform-runtime'],
+          presets: ['react-hmre','es2015', 'stage-0'],
         },
       },
     ],

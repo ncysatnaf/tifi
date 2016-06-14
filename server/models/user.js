@@ -15,15 +15,16 @@ const userSchema = new Schema({
   github: {id: String, token: String, name: String }
 })
 
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
-}
 
-userSchema.methods.comparePassword = function(candidatePassword,cb){
-  bcrypt.compare(candidatePassword, this.password, function(err,isMatch){
-    if(err) return cb(err)
-    cb(null, isMatch)
-  })
-}
+// userSchema.methods.generateHash = function(password) {
+//     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+// }
+//
+// userSchema.methods.comparePassword = (candidatePassword,cb)=> {
+//   bcrypt.compare(candidatePassword, this.password, function(err,isMatch){
+//     if(err) return cb(err)
+//     cb(null, isMatch)
+//   })
+// }
 
 export default mongoose.model('User', userSchema)
