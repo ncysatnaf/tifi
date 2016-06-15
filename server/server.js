@@ -106,7 +106,7 @@ app.use((req, res, next) => {
       return next()
     }
 
-    const initialState = { posts: [], post: {}, chats: [] }
+    const initialState = { post: {posts:[], post: {}}, chat: {} }
 
     const store = configureStore(initialState)
 

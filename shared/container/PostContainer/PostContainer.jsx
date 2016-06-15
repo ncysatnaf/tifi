@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react'
-import PostListView from '../PostListView/PostListView'
 import PostCreateView from '../../components/PostCreateView/PostCreateView'
 import Header from '../../components/Header/Header'
 import { connect } from 'react-redux'
@@ -40,9 +39,6 @@ class PostContainer extends Component {
     return (
       <div>
         <div className="container">
-          <PostCreateView addPost={this.add}
-            showAddPost={this.state.showAddPost}/>
-          <PostListView posts={this.props.posts}/>
         </div>
       </div>
     )
@@ -56,7 +52,7 @@ PostContainer.contextTypes = {
 
 function mapStateToProps(store) {
   return {
-    posts: store.posts,
+    posts: store.post.posts,
   }
 }
 

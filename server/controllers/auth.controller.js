@@ -12,8 +12,12 @@ export const login = async (req,res) => {
       if (isMatch) {
         let token = await jwt.sign({userId:user._id}, 'ha' )
         let update = await User.update({token: token})
-        let updateUser = await User.find({email:email})
-        res.json(updateUser)
+        if(update){
+          let updateUser = await User.findOne({email:email})
+          res.json(updateUser)
+        }else {
+          res.status(403).end()
+        }
     }else if (!isMatch) {
         res.status(403).send("Iniviald password")
       }

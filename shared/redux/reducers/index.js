@@ -1,7 +1,7 @@
 import * as ActionTypes from '../constants/constants'
 import { combineReducers } from 'redux'
 
-const postReducer = (state = { posts: [], post: null }, action) => {
+const post = (state = { posts: [], post: null }, action) => {
   switch (action.type) {
     case ActionTypes.ADD_POST :
       return {
@@ -43,7 +43,7 @@ const postReducer = (state = { posts: [], post: null }, action) => {
   }
 }
 
-const chatReducer = (state= { chats: []}, action) => {
+const chat = (state= { chats: []}, action) => {
   switch (action.type) {
     case ActionTypes.ADD_CHAT:
       return Object.assign({},state,{
@@ -54,9 +54,8 @@ const chatReducer = (state= { chats: []}, action) => {
   }
 }
 
-const rootReducer = combineReducers({
-  postReducer,
-  chatReducer
-})
 
-export default chatReducer
+export default combineReducers({
+  post,
+  chat
+})
