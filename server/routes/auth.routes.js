@@ -13,11 +13,4 @@ router.get('/github/callback',passport.authenticate('github',{
   successRedirect: '/',
   failureRedirect: '/',
 }))
-
-router.get('/facebook',passport.authenticate('facebook'))
-router.get('/facebook/callback', passport.authenticate('facebook',{
-  successRedirect: '/',
-  failureRedirect: '/',
-}))
-
 export default router

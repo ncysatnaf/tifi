@@ -27,11 +27,11 @@ export const addUser = async (req, res) => {
     return res.status(403).end()
   }
   try {
-    let user = await User.findOne({ email: req.body.email })
+    let user = await User.findOne({ 'local.email': req.body.email })
     if (user){
       res.status(500).send('该用户已存在')
     }else if (!user) {
-      const newUser = new User(req.body)
+      const newUser = new User({local: req.body})
 
       let id = await User.count()
       newUser.userId = +id
