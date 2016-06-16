@@ -5,7 +5,8 @@ import bcrypt from 'bcrypt-nodejs'
 
 export const getUser = async (req, res) => {
   try {
-    let userdata = await User.findOne({ userId: req.query.id })
+    let userdata = await User.findOne({ 'local.userId': req.query.id })
+    console.log(userdata)
     let user = new AccessUser(userdata)
     res.json(user)
   } catch (e) {
@@ -34,11 +35,11 @@ export const addUser = async (req, res) => {
       const newUser = new User({local: req.body})
 
       let id = await User.count()
-      newUser.userId = +id
+      newUser.local.userId = +id
       //hash password
-      newUser.password = await bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(8), null)
+      newUser.local.password = await bcrypt.hashSync(newUser.local.password, bcrypt.genSaltSync(8), null)
       //generator encryption token
-      newUser.token = await jwt.sign({ userId: newUser.userId, iat: Math.floor(Date.now() / 1000) - 30}, 'ha' )
+      newUser.local.token = await jwt.sign({ userId: newUser.local.userId, iat: Math.floor(Date.now() / 1000) - 30}, 'ha' )
       let saved = await newUser.save()
       res.json(saved)
     }
