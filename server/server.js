@@ -35,6 +35,7 @@ import auth from './routes/auth.routes'
 import chat from './routes/chat.routes'
 import dummyData from './dummyData'
 import serverConfig from './config'
+import passport from './util/passport'
 
 // MongoDB Connection
 mongoose.connect(serverConfig.mongoURL, (error) => {
@@ -48,6 +49,7 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
 })
 
 // Apply body Parser and server public assets and routes
+app.use(passport.initialize())
 app.use(bodyParser.json({ limit: '20mb' }))
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }))
 app.use(Express.static(path.resolve(__dirname, '../static')))
