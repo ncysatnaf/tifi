@@ -33,7 +33,6 @@ import posts from './routes/post.routes'
 import user from './routes/user.routes'
 import auth from './routes/auth.routes'
 import chat from './routes/chat.routes'
-import dummyData from './dummyData'
 import serverConfig from './config'
 import passport from './util/passport'
 
@@ -43,16 +42,14 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
     console.error('Please make sure Mongodb is installed and running!') // eslint-disable-line no-console
     throw error
   }
-
-  // feed some dummy data in DB.
-  dummyData()
 })
 
 // Apply body Parser and server public assets and routes
-app.use(passport.initialize())
 app.use(bodyParser.json({ limit: '20mb' }))
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }))
 app.use(Express.static(path.resolve(__dirname, '../static')))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use('/api', posts)
 app.use('/user', user)
 app.use('/auth', auth)

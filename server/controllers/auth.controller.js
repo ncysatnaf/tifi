@@ -9,9 +9,7 @@ export const login = async (req,res) => {
     let user = await User.findOne({'local.email': email})
     if (user){
       //compare and verify password
-      console.log(user.local.password)
       let isMatch = await bcrypt.compareSync(password, user.local.password)
-      console.log(isMatch)
       if (isMatch) {
         let token = await jwt.sign({userId:user._id}, 'ha' )
         let update = await User.findOneAndUpdate({token: token})
